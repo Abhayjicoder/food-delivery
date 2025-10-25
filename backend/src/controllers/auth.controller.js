@@ -1,6 +1,8 @@
 const usermodel = require("../models/user.model");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");     
+const jwt = require("jsonwebtoken");
+require('dotenv').config()
+  
 
 
 
@@ -25,7 +27,7 @@ const user = await usermodel.create({
     const token = jwt.sign({
         id: user._id,
         email: user.email
-    },"281751bcd960bb7d9e39c2b1b7f1ecc79ecf8754")
+    }, process.env.JWT_SECRET);
 
  res.cookie("token", token)
  
@@ -40,7 +42,37 @@ const user = await usermodel.create({
 
 async function loginUser(req, res) {
 
+  const {email, password } = req.body;
+
+   const user = await usermodel.findOne({ email: email });
+  
+   if (!user) {
+    return res.status(400).json({ message: "Invalid email or password" });
+   }
+    
+const ispasswordvalid = await bcrypt.compare(password, user.password);
+if (!ispasswordvalid) {
+    return res.status(400).json({ message: "Invalid email or password" });
+
   
 }
+const token = jwt.sign({
+    id: user._id,
+}, process.env.JWT_SECRET);
 
-module.exports = {registerUser};
+res.cookie("token", token); 
+res.status(200).json({ message: "User logged in successfully", user:{ _id:user._id,
+    fullname: user.fullname,
+    email: user.email
+ }});
+
+}
+
+function logoutUser(req, res) {
+    res.clearCookie("token");
+    res.status(200).json({ message: "User logged out successfully" });
+}
+
+
+
+module.exports = {registerUser, loginUser, logoutUser};
