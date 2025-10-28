@@ -9,7 +9,7 @@ router.post("/user/login", authController.loginUser);
 router.get("/user/logout", authController.logoutUser);
 
 // foodpartner auth api
-router.post("/foodpartner/registration", authController.registerfoodpartner);
+router.post("/foodpartner/register", authController.registerfoodpartner);
 router.post("/foodpartner/login", authController.loginfoodpartner);
 router.get("/foodpartner/logout", authController.logoutfoodpartner);
 

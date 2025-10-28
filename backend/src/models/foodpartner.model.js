@@ -3,10 +3,24 @@ const foodpartnerSchema = new mongoose.Schema({
     fullname: {
         type : String,
         required: true},
+    contactname:{
+        type: String,
+        required: true
+    },
+    phoneno:{
+        type: String,
+        required: true
+    },
+     address:{
+        type: String,
+        required: true
+    },
+
     email: {
         type : String,
         required: true,
         unique: true},
+
     password: {
         type : String,
         //  we are not making password required here because we might have google OAuth users without passwords

@@ -4,6 +4,14 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes');
 const foodRoutes = require('./routes/food.route');
 const app = express();
+const cors = require("cors");
+
+
+// cors is used because it Controls access between different origins
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true
+}));
 
 //middleware to parse JSON bodies
 

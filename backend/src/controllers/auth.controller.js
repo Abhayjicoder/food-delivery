@@ -75,7 +75,7 @@ function logoutUser(req, res) {
 }
 
 async function registerfoodpartner(req, res) {
-  const { fullname, email, password } = req.body;
+  const { fullname, email, password, phoneno, contactname,address} = req.body;
 
   // check if user already exists
   const isuserexist = await foodpartnermodel.findOne({ email: email });
@@ -87,7 +87,7 @@ async function registerfoodpartner(req, res) {
   const foodpartner = await foodpartnermodel.create({
     fullname,
     email,
-    password: hashedPassword,
+    password: hashedPassword,phoneno, contactname,address
   });
 
   // token is used to verify the user in subsequent requests
